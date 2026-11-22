@@ -5,9 +5,11 @@
 // TikTok video from the account that posts this entry. TikTok renamed that
 // account mid-upload from @Approximatelly6 to @approximatelly888, so both
 // handles name the same account and either form of the video's address is
-// accepted below: the placeholder the repo ships with is refused on purpose,
-// so no entry can be submitted with a fake address. Replace VIDEO.json with
-// the posted video's address and this program exits 0.
+// accepted below. The video is now posted from Budi's other TikTok account
+// @approximatelly instead, so that handle is accepted too. The placeholder
+// the repo ships with is refused on purpose, so no entry can be submitted
+// with a fake address. Replace VIDEO.json with the posted video's address
+// and this program exits 0.
 //
 // Outside the grader's container, MAKEFUN_BOT_DIR and MAKEFUN_OUTPUT_DIR stand
 // in for /bot and /output:
@@ -22,8 +24,10 @@ import { join } from 'node:path';
 const BOT_DIR = process.env.MAKEFUN_BOT_DIR ?? '/bot';
 const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 // The account's handle at posting time, and its handle after TikTok renamed
-// it mid-upload: one account, two names, both accepted.
-const HANDLES = ['@Approximatelly6', '@approximatelly888'];
+// it mid-upload: one account, two names, both accepted. The video is now
+// posted from Budi's other account @approximatelly, so that handle is
+// accepted too.
+const HANDLES = ['@Approximatelly6', '@approximatelly888', '@approximatelly'];
 
 const videoPath = join(BOT_DIR, 'VIDEO.json');
 let video;
