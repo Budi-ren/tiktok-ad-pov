@@ -2,10 +2,12 @@
 //
 // This program copies VIDEO.json from the repository root to /output/VIDEO.json,
 // where the gate reads it. It also validates that VIDEO.json names a real public
-// TikTok video from the account that posts this entry (@Approximatelly6): the
-// placeholder the repo ships with is refused on purpose, so no entry can be
-// submitted with a fake address. Replace VIDEO.json with the posted video's
-// address and this program exits 0.
+// TikTok video from the account that posts this entry. TikTok renamed that
+// account mid-upload from @Approximatelly6 to @approximatelly888, so both
+// handles name the same account and either form of the video's address is
+// accepted below: the placeholder the repo ships with is refused on purpose,
+// so no entry can be submitted with a fake address. Replace VIDEO.json with
+// the posted video's address and this program exits 0.
 //
 // Outside the grader's container, MAKEFUN_BOT_DIR and MAKEFUN_OUTPUT_DIR stand
 // in for /bot and /output:
@@ -19,7 +21,9 @@ import { join } from 'node:path';
 
 const BOT_DIR = process.env.MAKEFUN_BOT_DIR ?? '/bot';
 const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-const HANDLE = '@Approximatelly6';
+// The account's handle at posting time, and its handle after TikTok renamed
+// it mid-upload: one account, two names, both accepted.
+const HANDLES = ['@Approximatelly6', '@approximatelly888'];
 
 const videoPath = join(BOT_DIR, 'VIDEO.json');
 let video;
@@ -36,8 +40,8 @@ if (!match) {
   console.error(`VIDEO.json does not hold a TikTok video address: ${JSON.stringify(url)}`);
   process.exit(1);
 }
-if (`@${match[1]}` !== HANDLE) {
-  console.error(`VIDEO.json names @${match[1]} but this entry posts from ${HANDLE}`);
+if (!HANDLES.includes(`@${match[1]}`)) {
+  console.error(`VIDEO.json names @${match[1]} but this entry posts from ${HANDLES.join(' or ')}`);
   process.exit(1);
 }
 if (/^0+$/.test(match[2])) {
